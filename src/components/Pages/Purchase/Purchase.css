@@ -1,0 +1,32 @@
+.purchase-form {
+  /* width: 80%; */
+  max-width: 100;
+  margin: 20px 3%;
+  padding: 40px;
+  background-color:rgba(122, 118, 118, 0.158);
+}
+.purchase-form input,
+.purchase-form select,
+.purchase-form textarea {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid white;
+  padding: 12px;
+  margin: 12px;
+  font-size: 14px;
+}
+/* .purchase-form button[type="submit"],
+.purchase-form input[type="submit"] {
+  background: #0a0a0a6e;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  margin-top: 40px;
+  padding: 20px;
+  font-size: 16px;
+  font-weight: 100;
+  letter-spacing: 10px;
+} */

@@ -1,0 +1,45 @@
+
+.Vendor {
+    /* max-width: 0%; */
+    max-width: 100;
+    margin: 20px 5%;
+    padding: 40px;
+    background-color: rgba(0, 0, 0, 0.685);
+  }
+  .Vendor input,
+  .Vendor textarea,
+  .Vendor select {
+    /* display: inline; */
+    box-sizing: border-box;
+    width: 47%;
+    border-radius: 4px;
+    border: 1px solid white;
+    padding: 12px;
+    margin: 7px;
+    font-size: 14px;
+  }
+  .Vendor button[type="submit"],
+  .Vendor input[type="submit"] {
+    background: #0a0a0a;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: none;
+    margin-top: 30px;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: 100;
+    letter-spacing: 10px;
+  }
+  .Vendor textarea{
+    margin: 20px auto;
+    padding: 30px;
+    font-size: 18px;
+    width: 60%;
+}
+.Vendor [type="radio"]{
+    font-weight: bold;
+    color: red;
+    border: 1px solid red;
+}
+  
