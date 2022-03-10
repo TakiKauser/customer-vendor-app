@@ -30,7 +30,7 @@ const Menubar = () => {
 
                             </NavDropdown>
                             
-                            <Nav.Link href="#hsCode">HS_Code</Nav.Link>
+                            <Nav.Link href="hsCode">HS_Code</Nav.Link>
                             <Nav.Link href="purchase">Purchase</Nav.Link>
                             {/* <Link to="/hsCode" activeStyle={{ color: 'yellow', fontWeight: 'bold' }} className="navlink">hs_code</Link> */}
                         </Nav>
