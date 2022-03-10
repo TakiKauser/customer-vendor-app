@@ -33,7 +33,7 @@ const HsCode = () => {
 
                     <input type="text" placeholder="HS_Code" {...register("hs_code", { required: true, maxLength: 100 })} />
                     <input type="text" placeholder="Description" {...register("description", { required: true, maxLength: 100 })} />
-                    <input type="text" placeholder="uom" {...register("uom", { required: true })} />
+                    {/* <input type="text" placeholder="uom" {...register("uom", { required: true })} /> */}
                     <input type="number" placeholder="cd" {...register("cd", { required: true })} />
                     <input type="number" placeholder="sd" {...register("sd", { required: true })} />
                     <input type="number" placeholder="vat" {...register("vat", { required: true })} />
@@ -42,11 +42,11 @@ const HsCode = () => {
                     <input type="number" placeholder="atv" {...register("atv", { required: true })} />
 
                     <select {...register("uom", { required: true })}>
-                            {/* <option value="tag">Tags</option> */}
-                            <option value="">uom</option>
-                            <option value="number">Number</option>
-                            <option value="kg">kg</option>
-                        </select>
+                        {/* <option value="tag">Tags</option> */}
+                        <option value="">uom</option>
+                        <option value="number">Number</option>
+                        <option value="kg">kg</option>
+                    </select>
 
                     <input type="submit" value="Add HS_Code" />
                 </form>
