@@ -17,6 +17,7 @@ import Category from './components/Pages/Products/Category/Category';
 import Product from './components/Pages/Products/Products/Product';
 import Purchase from './components/Pages/Purchase/Purchase';
 import HsCode from './components/Pages/HS-Code/HsCode';
+import ProductList from './components/Pages/Products/Product-List/ProductList';
 // import { NavLink } from 'react-router-dom';
 
 function App() {
@@ -38,7 +39,7 @@ function App() {
           <Route path="category_list" element={<VendorPage />} />
 
           <Route path="products" element={<Product />} />
-          <Route path="product_list" element={<VendorPage />} />
+          <Route path="product_list" element={<ProductList />} />
 
           <Route path="hsCode" element={<HsCode />} />
 
