@@ -8,55 +8,44 @@ const Product = () => {
     console.log(errors);
 
     const [hs_codes, setHS_Code] = useState([]);
-    const [selectedCode, setSelectedCode] = useState({});
-
-    // const [selectedID, setSelectedID] = useState('');
-
-    const [data, setData] = useState({
-        hs_code: ""
-    })
+    const [selectedCode, setSelectedCode] = useState();
 
     useEffect(() => {
         fetch(`https://vatdj.herokuapp.com/product/hs_code/`)
             .then(response => response.json())
             .then(jsonData => {
-                console.log(jsonData);
+                // console.log(jsonData);
                 setHS_Code(jsonData);
             })
     }, []);
 
-    useEffect(() => {
-        setSelectedCode(hs_codes[0])
-    }, [hs_codes]);
-
     // useEffect(() => {
-    //     // let currentCode = hs_codes?.find(code => code.id == e.target.value);
-    //     setSelectedID(selectedCode.id);
-    //     console.log("selectedID", selectedCode.id);
-    //     // setSelectedID()
-    // }, [selectedCode.id]);
+    //     setSelectedCode(hs_codes[0]);
+    // }, [hs_codes]);
 
     const handleOnChange = (e) => {
-        console.log(e.target.value);
-        if (e.target.name === 'hs_code') {
-            let currentCode = hs_codes?.find(code => code.id == e.target.value);
-            // let selectedID = hs_codes?.find(code => code.id == e.target.value);
-            console.log(currentCode);
-            setSelectedCode(currentCode);
+        setSelectedCode(e.target.value);
+        // console.log("onChangeValue", e.target.value);
+        // if (e.target.name === 'hs_code') {
+        //     let currentCode = hs_codes?.find(code => code.id == e.target.value);
+        //     // let selectedID = hs_codes?.find(code => code.id == e.target.value);
+        //     console.log("currentCode",currentCode);
+        //     setSelectedCode(currentCode);
 
-            // let selected_ID = currentCode.id;
-            // setSelectedID(currentCode.id);
-            console.log("selectedID", selectedCode.id);
+        //     // let selected_ID = currentCode.id;
+        //     console.log(currentCode.id);
+        //     console.log("selectedID", selectedCode.id);
 
-            const newData = { ...data };
-            newData[e.target.id] = e.target.value;
-            setData(newData);
-            console.log(data);
-        }
+        //     const newData = { ...data };
+        //     newData[e.target.id] = e.target.value;
+        //     setData(newData);
+        //     console.log(data);
+        // }
         // else console.log("error");
     }
 
     const onSubmit = data => {
+        data.hs_code = selectedCode;
         const url = `https://vatdj.herokuapp.com/product/product_variant/`;
         fetch(url, {
             method: 'POST',
