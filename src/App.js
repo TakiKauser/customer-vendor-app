@@ -19,6 +19,8 @@ import Purchase from './components/Pages/Purchase/Purchase';
 import HsCode from './components/Pages/HS-Code/HsCode';
 import ProductList from './components/Pages/Products/Product-List/ProductList';
 import initAuth from './components/UserAuth/Firebase/firebase.init';
+import PurchaseList from './components/Pages/PurchaseList/PurchaseList';
+import ProductDetails from './components/Pages/ProductDetails/ProductDetails';
 // import { NavLink } from 'react-router-dom';
 
 initAuth();
@@ -47,14 +49,16 @@ function App() {
           <Route path="hsCode" element={<HsCode />} />
 
           <Route path="purchase" element={<Purchase />} />
+          <Route path="purchase_invoice_list" element={<PurchaseList />} />
+          <Route path="productDetails/:itemNumber" element={<ProductDetails />} />
 
           {/* <Route path="teams" element={<Teams />}> */}
           {/* <Route path=":teamId" element={<Team />} /> */}
           {/* <Route path="new" element={<NewTeamForm />} /> */}
           {/* <Route index element={<LeagueStandings />} /> */}
-      </Routes>
-    </BrowserRouter>
-      
+        </Routes>
+      </BrowserRouter>
+
     </div >
   );
 }
