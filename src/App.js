@@ -23,6 +23,7 @@ import PurchaseList from './components/Pages/PurchaseList/PurchaseList';
 import ProductDetails from './components/Pages/ProductDetails/ProductDetails';
 import CustomerList from './components/Pages/Parties/Customer-List/CustomerList';
 import VendorList from './components/Pages/Parties/Vendor-List/VendorList';
+import HSCodeList from './components/Pages/HSCodeList/HSCodeList';
 // import { NavLink } from 'react-router-dom';
 
 initAuth();
@@ -49,6 +50,7 @@ function App() {
           <Route path="product_list" element={<ProductList />} />
 
           <Route path="hsCode" element={<HsCode />} />
+          <Route path="hsCode_list" element={<HSCodeList />} />
 
           <Route path="purchase" element={<Purchase />} />
           <Route path="purchase_invoice_list" element={<PurchaseList />} />
