@@ -21,6 +21,7 @@ import ProductList from './components/Pages/Products/Product-List/ProductList';
 import initAuth from './components/UserAuth/Firebase/firebase.init';
 import PurchaseList from './components/Pages/PurchaseList/PurchaseList';
 import ProductDetails from './components/Pages/ProductDetails/ProductDetails';
+import CustomerList from './components/Pages/Parties/Customer-List/CustomerList';
 // import { NavLink } from 'react-router-dom';
 
 initAuth();
@@ -35,7 +36,7 @@ function App() {
           <Route path="/" element={<Home />} />
 
           <Route path="customer" element={<CustomerPage />} />
-          <Route path="customer_list" element={<CustomerPage />} />
+          <Route path="customer_list" element={<CustomerList />} />
 
           <Route path="vendor" element={<VendorPage />} />
           <Route path="vendor_list" element={<VendorPage />} />
