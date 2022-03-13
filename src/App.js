@@ -22,6 +22,7 @@ import initAuth from './components/UserAuth/Firebase/firebase.init';
 import PurchaseList from './components/Pages/PurchaseList/PurchaseList';
 import ProductDetails from './components/Pages/ProductDetails/ProductDetails';
 import CustomerList from './components/Pages/Parties/Customer-List/CustomerList';
+import VendorList from './components/Pages/Parties/Vendor-List/VendorList';
 // import { NavLink } from 'react-router-dom';
 
 initAuth();
@@ -39,7 +40,7 @@ function App() {
           <Route path="customer_list" element={<CustomerList />} />
 
           <Route path="vendor" element={<VendorPage />} />
-          <Route path="vendor_list" element={<VendorPage />} />
+          <Route path="vendor_list" element={<VendorList />} />
 
           <Route path="category" element={<Category />} />
           <Route path="category_list" element={<VendorPage />} />
