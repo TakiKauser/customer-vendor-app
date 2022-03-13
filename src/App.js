@@ -18,7 +18,10 @@ import Product from './components/Pages/Products/Products/Product';
 import Purchase from './components/Pages/Purchase/Purchase';
 import HsCode from './components/Pages/HS-Code/HsCode';
 import ProductList from './components/Pages/Products/Product-List/ProductList';
+import initAuth from './components/UserAuth/Firebase/firebase.init';
 // import { NavLink } from 'react-router-dom';
+
+initAuth();
 
 function App() {
 

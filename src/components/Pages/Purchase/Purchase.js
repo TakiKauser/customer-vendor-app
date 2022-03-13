@@ -128,7 +128,7 @@ const Purchase = () => {
         })
             .then(response => response.json())
             .then(result => {
-                // console.log(result);
+                console.log(result);
                 if (result.insertedId) {
                     alert("Purchase invoice is added successfully.");
                     reset();
