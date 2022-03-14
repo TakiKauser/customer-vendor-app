@@ -22,6 +22,7 @@ import VendorList from './components/Pages/Parties/Vendor-List/VendorList';
 import HSCodeList from './components/Pages/HSCodeList/HSCodeList';
 import Sales from './components/Pages/Sales/Sales';
 import SalesList from './components/Pages/SalesList/SalesList';
+import Categoryist from './components/Pages/Products/Category-List/CategoryList';
 
 initAuth();
 
@@ -41,7 +42,7 @@ function App() {
           <Route path="vendor_list" element={<VendorList />} />
 
           <Route path="category" element={<Category />} />
-          <Route path="category_list" element={<VendorPage />} />
+          <Route path="category_list" element={<Categoryist />} />
 
           <Route path="products" element={<Product />} />
           <Route path="product_list" element={<ProductList />} />
