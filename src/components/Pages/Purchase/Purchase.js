@@ -17,11 +17,11 @@ const Purchase = () => {
             {
                 vendor: [
                     {
-                        vendor: "mahin",
-                        email: "xsdfsf@google.com",
-                        address: "habijabi",
-                        order_deadline: "2022-03-10",
-                        mobile: "1236486"
+                        vendor: "",
+                        email: "",
+                        address: "",
+                        order_deadline: "",
+                        mobile: ""
                     }
                 ],
                 products: []
@@ -57,13 +57,13 @@ const Purchase = () => {
             })
     }, []);
 
-    useEffect(() => {
-        setSelectedVendor(vendors[0]);
-    }, [vendors]);
+    // useEffect(() => {
+    //     setSelectedVendor(vendors[0]);
+    // }, [vendors]);
 
-    useEffect(() => {
-        setSelectedProducts(products[0]?.id);
-    }, [products]);
+    // useEffect(() => {
+    //     setSelectedProducts(products[0]?.id);
+    // }, [products]);
 
     const handleOnChangeVendor = (e) => {
         setSelectedVendor(e.target.value);
@@ -88,11 +88,11 @@ const Purchase = () => {
     const addTableRow = () => {
         const newData = { ...submitDataFormat };
         newData.result[0].products.unshift(selectedProductsData);
-        console.log("spd",selectedProductsData);
+        // console.log("spd", selectedProductsData);
         setSubmitDataFormat(newData);
-        console.log("sdf",submitDataFormat);
+        // console.log("sdf", submitDataFormat);
     }
-    
+
     const findSelectProductData = (id) => {
         const url = `https://vatdj.herokuapp.com/purchase/product_details/${id}/`;
         fetch(url, {
@@ -145,7 +145,7 @@ const Purchase = () => {
                 <input type="submit" value="Purchase" className="" />
                 <div className="d-flex justify-content-around">
                     <select onChange={(e) => handleOnChangeVendor(e)} value={selectedVendor?.id} name="vendor" id="vendor">
-                        {/* <option value="">vendor</option> */}
+                        <option value="">Select Vendor</option>
                         {
                             vendors?.map((vendor, index) => (
                                 // console.log("vendor", vendor.description, index);
@@ -184,16 +184,16 @@ const Purchase = () => {
                         {
                             submitDataFormat.result[0].products.map((product, index) => (
                                 <tr key={index}>
-                                    <td id="col0">{product.product_name}</td>
-                                    <td id="col1">{product.product_variant}</td>
-                                    <td id="col2">{product.hs_code}</td>
-                                    <td id="col3">{product.uom}</td>
-                                    <td id="col4">{product.cd}</td>
-                                    <td id="col5">{product.sd}</td>
-                                    <td id="col6">{product.vat}</td>
-                                    <td id="col7">{product.ait}</td>
-                                    <td id="col8">{product.rd}</td>
-                                    <td id="col9">{product.atv}</td>
+                                    <td>{product.product_name}</td>
+                                    <td>{product.product_variant}</td>
+                                    <td>{product.hs_code}</td>
+                                    <td>{product.uom}</td>
+                                    <td>{product.cd}</td>
+                                    <td>{product.sd}</td>
+                                    <td>{product.vat}</td>
+                                    <td>{product.ait}</td>
+                                    <td>{product.rd}</td>
+                                    <td>{product.atv}</td>
                                 </tr>
                                 // console.log(product)
                             ))
@@ -201,25 +201,26 @@ const Purchase = () => {
                         <tr>
                             <td id="col0">
                                 <select onChange={(e) => setSelectedProducts(e.target.value)} value={selectedProducts?.id} name="product" id="product">
+                                    <option value="">Select Product</option>
                                     {
                                         products?.map((product, index) => <option value={product?.id} key={index}>{product?.name}</option>)
                                     }
                                 </select>
                             </td>
-                            <td id="col1">{selectedProductsData.product_variant}</td>
-                            <td id="col2">{selectedProductsData.hs_code}</td>
-                            <td id="col3">{selectedProductsData.uom}</td>
-                            <td id="col4">{selectedProductsData.cd}</td>
-                            <td id="col5">{selectedProductsData.sd}</td>
-                            <td id="col6">{selectedProductsData.vat}</td>
-                            <td id="col7">{selectedProductsData.ait}</td>
-                            <td id="col8">{selectedProductsData.rd}</td>
-                            <td id="col9">{selectedProductsData.atv}</td>
+                            <td>{selectedProductsData.product_variant}</td>
+                            <td>{selectedProductsData.hs_code}</td>
+                            <td>{selectedProductsData.uom}</td>
+                            <td>{selectedProductsData.cd}</td>
+                            <td>{selectedProductsData.sd}</td>
+                            <td>{selectedProductsData.vat}</td>
+                            <td>{selectedProductsData.ait}</td>
+                            <td>{selectedProductsData.rd}</td>
+                            <td>{selectedProductsData.atv}</td>
                         </tr>
                     </tbody>
                 </Table>
                 <div>
-                    <Button onClick={() => addTableRow()} variant="secondary" size="sm">
+                    <Button onClick={() => addTableRow()} variant="secondary" size="sm" className="mb-5">
                         Add Product
                     </Button>
                 </div>
