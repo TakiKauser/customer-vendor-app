@@ -17,7 +17,7 @@ const HSCodeList = () => {
         <div>
             <Menubar />
             <div>
-                <h4 className="text-start ms-5 my-4">HS Code List</h4>
+                <h4 className="text-start ms-5 my-4">Customs Tariff</h4>
                 <Table id="table" striped bordered hover className="sm">
                     <thead>
                         <tr>
