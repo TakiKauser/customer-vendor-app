@@ -25,7 +25,7 @@ const ProductList = () => {
                             <th>Description</th>
                             <th>Category</th>
                             <th>Product Type</th>
-                            <th>Manufaturer</th>
+                            <th>Manufacturer</th>
                             <th>Available in po</th>
                             <th>Available in so</th>
                         </tr>

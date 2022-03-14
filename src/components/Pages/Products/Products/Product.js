@@ -7,6 +7,9 @@ const Product = () => {
     // const onSubmit = data => console.log(data);
     console.log(errors);
 
+    const [available_in_po, setAvailable_in_po] = useState(false);
+    const [available_in_so, setAvailable_in_so] = useState(false);
+
     const [hs_codes, setHS_Code] = useState([]);
     const [selectedCode, setSelectedCode] = useState();
 
@@ -25,23 +28,6 @@ const Product = () => {
 
     const handleOnChange = (e) => {
         setSelectedCode(e.target.value);
-        // console.log("onChangeValue", e.target.value);
-        // if (e.target.name === 'hs_code') {
-        //     let currentCode = hs_codes?.find(code => code.id == e.target.value);
-        //     // let selectedID = hs_codes?.find(code => code.id == e.target.value);
-        //     console.log("currentCode",currentCode);
-        //     setSelectedCode(currentCode);
-
-        //     // let selected_ID = currentCode.id;
-        //     console.log(currentCode.id);
-        //     console.log("selectedID", selectedCode.id);
-
-        //     const newData = { ...data };
-        //     newData[e.target.id] = e.target.value;
-        //     setData(newData);
-        //     console.log(data);
-        // }
-        // else console.log("error");
     }
 
     const onSubmit = data => {
@@ -56,34 +42,50 @@ const Product = () => {
         })
             .then(response => response.json())
             .then(result => {
-                // console.log(result);
+                console.log(result);
                 if (result.insertedId) {
                     alert("Product variant is added successfully.");
                     reset();
                 }
             });
-        // console.log(data);
+        console.log(data);
     };
 
     return (
         <div>
             <Menubar />
             <div className="d-flex flex-column">
-                <form onSubmit={handleSubmit(onSubmit)} className="CusVend">
-                    <input type="text" placeholder="Name" {...register("name", { required: true, maxLength: 100 })} />
-                    <input type="text" placeholder="Description" {...register("description", { required: true, maxLength: 100 })} />
-
-                    <select onChange={(e) => handleOnChange(e)} value={selectedCode?.id} name="hs_code" id="hs_code">
-                        {/* <option value="">hs_code</option> */}
-                        {/* hs_code - description */}
-                        {
-                            hs_codes?.map((hs_code, index) => (
-                                // console.log("hs_code", hs_code.description, index);
-                                <option value={`${hs_code?.id}`} key={index}>{`${hs_code?.hs_code}`} - {`${hs_code?.description}`} </option>
-                            ))
-                        }
-                    </select>
-                    <input type="submit" value="Add" />
+                <h2 className="my-3">Add Product</h2>
+                <form onSubmit={handleSubmit(onSubmit)} className="purchase-form">
+                    <div className="d-flex">
+                        <input type="text" placeholder="Name" {...register("name", { required: true, maxLength: 100 })} />
+                        <input type="text" placeholder="Description" {...register("description", { required: false, maxLength: 100 })} />
+                        <input type="number" placeholder="Category" {...register("product_category", { required: true, maxLength: 100 })} />
+                    </div>
+                    <div className="d-flex">
+                        <input type="text" placeholder="Product Type" {...register("product_type", { required: true, maxLength: 100 })} />
+                        <input type="text" placeholder="Manufacturer" {...register("manufacturer", { required: true, maxLength: 100 })} />
+                        <select onChange={(e) => handleOnChange(e)} value={selectedCode?.id} name="hs_code" id="hs_code">
+                            <option value="">hs_code - description</option>
+                            {/* hs_code - description */}
+                            {
+                                hs_codes?.map((hs_code, index) => (
+                                    <option value={`${hs_code?.id}`} key={index}>{`${hs_code?.hs_code}`} - {`${hs_code?.description}`} </option>
+                                ))
+                            }
+                        </select>
+                    </div>
+                    <div className="text-secondary d-flex justify-content-evenly">
+                        <div className="">
+                            <input type="checkbox" placeholder="PO" {...register("available_in_po", { required: false })} value={!available_in_po} />
+                            <p className="">Available_in_PO</p>
+                        </div>
+                        <div className="">
+                            <input type="checkbox" placeholder="SO" {...register("available_in_so", { required: false })} value={!available_in_so} />
+                            <p className="">Available_in_SO</p>
+                        </div>
+                    </div>
+                    <input type="submit" value="Add Product" />
                 </form>
             </div>
         </div>
