@@ -1,49 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import './Vendor.css';
 
 const Vendor = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    // const onSubmit = data => console.log(data);
     console.log(errors);
+
+    const [is_customer, setIsCustomer] = useState(false);
+    const [is_vendor, setIsVendor] = useState(false);
+
+    const onSubmit = data => {
+        const url = `https://vatdj.herokuapp.com/parties/list/`;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                if (result.insertedId) {
+                    alert("Parties item is added successfully.");
+                    reset();
+                }
+            });
+        console.log("data", data);
+    };
+
     return (
         <div className="d-flex flex-column">
-
-            <form onSubmit={handleSubmit(onSubmit)} className="Vendor">
-                <div className="d-flex">
-                    <div className="mx-3">
+            <h2 className="my-3">Add Vendor</h2>
+            <form onSubmit={handleSubmit(onSubmit)} className="purchase-form">
+                <div className="">
+                    <div className="text-secondary d-flex ms-3 me-5 d-flex justify-content-between">
+                        <div className="d-flex">
+                            <div>
+                                <p className="text-dark ms-2">Customer / Vendor: </p>
+                            </div>
+                            <div>
+                                <p className="mx-5">Customer</p>
+                                <input type="checkbox" placeholder="Customer" {...register("is_customer", { required: false })} value={`${!is_customer}`} />
+                            </div>
+                            <div>
+                                <p className="mx-5">Vendor</p>
+                                <input type="checkbox" placeholder="Vendor" {...register("is_vendor", { required: false })} value={`${!is_vendor}`} />
+                            </div>
+                        </div>
+                        <div className="d-flex justify-content-between text-secondary ms-5">
+                            <div>
+                                <p className="text-dark ms-5">Customer Type: </p>
+                            </div>
+                            <div>
+                                <p className="mx-5">Individual</p>
+                                <input {...register("customer_type", { required: true })} type="radio" value="individual" />
+                            </div>
+                            <div>
+                                <p className="mx-5">Company</p>
+                                <input {...register("customer_type", { required: true })} type="radio" value="company" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="d-flex">
+                        <input type="text" placeholder="Name" {...register("name", { required: true, maxLength: 100 })} />
                         <input type="text" placeholder="Address" {...register("address", { required: true, maxLength: 100 })} />
-                        <input type="text" placeholder="Tax ID" {...register("tax_id", { required: true, maxLength: 100 })} />
+                        <input type="text" placeholder="Tax ID" {...register("Tax_ID", { required: true, maxLength: 100 })} />
+                    </div>
+                    <div className="d-flex">
                         <input type="tel" placeholder="Phone" {...register("phone", { required: true, minLength: 6, maxLength: 12 })} />
                         <input type="tel" placeholder="Mobile" {...register("mobile", { required: true, minLength: 6, maxLength: 12 })} />
                         <input type="email" placeholder="Email" {...register("Email", { required: true, maxLength: 100 })} />
-                        <input type="text" placeholder="Website Link" {...register("website_link", { required: true, maxLength: 200 })} />
                     </div>
-                    <div className="mx-3">
-                        <select {...register("tags", { required: true })}>
-                            {/* <option value="tag">Tags</option> */}
-                            <option value="paymentTerms">Payment Terms</option>
-                            <option value="paymentMethods">Payment Methods</option>
-                        </select>
-                        <input type="text" placeholder="Refference" {...register("refference", { required: true, maxLength: 100 })} />
-                        <input type="text" placeholder="Business Type / Industry" {...register("business_type", { required: true, maxLength: 100 })} />
-                        <input type="text" placeholder="Bank A/C Number" {...register("bank_ac_number", { required: true, maxLength: 100 })} />
-
-                        {/* <label htmlFor="payable"> */}
-                            {/* <input {...register("ac_type", { required: true })} type="radio" value="Yes" id="payable" /> */}
-                        {/* </label> */}
-                        {/* <label htmlFor="receivable"> */}
-                        {/* <input {...register("ac_type", { required: true })} type="radio" value="No" id="receivable" /> */}
-                        {/* </label> */}
-
-                        <input {...register("ac_type", { required: true })} type="radio" value="Payable" />
-                        <input {...register("ac_type", { required: true })} type="radio" value=" Receivable" />
-
-                    </div>
+                    <textarea placeholder="Note" {...register("Note", { required: true })} />
                 </div>
-                <textarea placeholder="Note" {...register("Note", { required: true })} />
-
-
                 <input type="submit" value="Add" />
             </form>
         </div>
