@@ -1,14 +1,10 @@
 import './App.css';
 import React from "react";
-// import { render } from "react-dom";
 import {
   BrowserRouter,
   Routes,
   Route,
 } from "react-router-dom";
-// import {BrowserRouter, Router, Routes, Route} from "react-router-dom";
-
-// import { Container, Nav, Navbar, NavDropdown, NavLink } from 'react-bootstrap';
 // import Menubar from './components/Shared/Menubar/Menubar';
 import Home from './components/Home/Home';
 import CustomerPage from './components/Pages/Parties/Customer/CustomerPage';
@@ -24,7 +20,8 @@ import ProductDetails from './components/Pages/ProductDetails/ProductDetails';
 import CustomerList from './components/Pages/Parties/Customer-List/CustomerList';
 import VendorList from './components/Pages/Parties/Vendor-List/VendorList';
 import HSCodeList from './components/Pages/HSCodeList/HSCodeList';
-// import { NavLink } from 'react-router-dom';
+import Sales from './components/Pages/Sales/Sales';
+import SalesList from './components/Pages/SalesList/SalesList';
 
 initAuth();
 
@@ -55,6 +52,10 @@ function App() {
           <Route path="purchase" element={<Purchase />} />
           <Route path="purchase_invoice_list" element={<PurchaseList />} />
           <Route path="productDetails/:itemNumber" element={<ProductDetails />} />
+
+          <Route path="sales" element={<Sales />} />
+          <Route path="sales_invoice_list" element={<SalesList />} />
+          {/* <Route path="productDetails/:itemNumber" element={<ProductDetails />} /> */}
 
           {/* <Route path="teams" element={<Teams />}> */}
           {/* <Route path=":teamId" element={<Team />} /> */}

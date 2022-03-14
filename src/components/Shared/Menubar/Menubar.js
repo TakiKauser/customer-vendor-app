@@ -27,19 +27,22 @@ const Menubar = () => {
                                 <NavDropdown.Item href="vendor">Vendor</NavDropdown.Item>
                                 <NavDropdown.Item href="customer_list">Customer List</NavDropdown.Item>
                                 <NavDropdown.Item href="vendor_list">Vendor List</NavDropdown.Item>
-
                             </NavDropdown>
 
                             <NavDropdown title="HS Code" id="navbarScrollingDropdown">
                                 <NavDropdown.Item href="hsCode">HS_Code</NavDropdown.Item>
                                 <NavDropdown.Item href="hsCode_list">HS_Code List</NavDropdown.Item>
-
                             </NavDropdown>
                             
-                            {/* <Nav.Link href="hsCode">HS_Code</Nav.Link> */}
-                            <Nav.Link href="purchase">Purchase</Nav.Link>
-                            <Nav.Link href="purchase_invoice_list">Purchase Invoice List</Nav.Link>
-                            {/* <Link to="/hsCode" activeStyle={{ color: 'yellow', fontWeight: 'bold' }} className="navlink">hs_code</Link> */}
+                            <NavDropdown title="Purchase" id="navbarScrollingDropdown">
+                                <NavDropdown.Item href="purchase">Purchase</NavDropdown.Item>
+                                <NavDropdown.Item href="purchase_invoice_list">Purchase List</NavDropdown.Item>
+                            </NavDropdown>
+                            
+                            <NavDropdown title="Sales" id="navbarScrollingDropdown">
+                                <NavDropdown.Item href="sales">Sales</NavDropdown.Item>
+                                <NavDropdown.Item href="sales_invoice_list">Sales List</NavDropdown.Item>
+                            </NavDropdown>
                         </Nav>
 
                     </Navbar.Collapse>
