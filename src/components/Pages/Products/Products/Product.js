@@ -11,10 +11,11 @@ const Product = () => {
     const [available_in_so, setAvailable_in_so] = useState(false);
 
     const [hs_codes, setHS_Code] = useState([]);
-    const [selectedCode, setSelectedCode] = useState();
+    const [category, setCategory] = useState();
+    const [type, setType] = useState();
 
     useEffect(() => {
-        fetch(`https://vatdj.herokuapp.com/product/hs_code/`)
+        fetch(`https://vatdj.herokuapp.com/product/product_variant/`)
             .then(response => response.json())
             .then(jsonData => {
                 // console.log(jsonData);
@@ -23,16 +24,22 @@ const Product = () => {
     }, []);
 
     // useEffect(() => {
-    //     setSelectedCode(hs_codes[0]);
+    //     setCategory(hs_codes[0]);
     // }, [hs_codes]);
 
-    const handleOnChange = (e) => {
-        setSelectedCode(e.target.value);
+    const handleOnChangeCategory = (e) => {
+        setCategory(e.target.value);
+    }
+    const handleOnChangeType = (e) => {
+        setType(e.target.value);
     }
 
     const onSubmit = data => {
-        data.hs_code = selectedCode;
-        const url = `https://vatdj.herokuapp.com/product/product_variant/`;
+        data.product_category = parseInt(category);
+        console.log(category);
+        console.log(type);
+        data.product_type = type;
+        const url = `https://vatdj.herokuapp.com/product/product_list/`;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -60,20 +67,34 @@ const Product = () => {
                     <div className="d-flex">
                         <input type="text" placeholder="Name" {...register("name", { required: true, maxLength: 100 })} />
                         <input type="text" placeholder="Description" {...register("description", { required: false, maxLength: 100 })} />
-                        <input type="number" placeholder="Category" {...register("product_category", { required: true, maxLength: 100 })} />
-                    </div>
-                    <div className="d-flex">
-                        <input type="text" placeholder="Product Type" {...register("product_type", { required: true, maxLength: 100 })} />
-                        <input type="text" placeholder="Manufacturer" {...register("manufacturer", { required: true, maxLength: 100 })} />
-                        <select onChange={(e) => handleOnChange(e)} value={selectedCode?.id} name="hs_code" id="hs_code">
-                            <option value="">hs_code - description</option>
+                        {/* <input type="number" placeholder="Category" {...register("product_category", { required: true, maxLength: 100 })} /> */}
+                        <select onChange={(e) => handleOnChangeCategory(e)} value={category?.id} name="product_category" id="product_category">
+                            <option value="">Category</option>
                             {/* hs_code - description */}
                             {
+                                hs_codes?.map((hs_code, index) => (
+                                    <option value={hs_code?.id} key={index}>{hs_code?.name}</option>
+                                ))
+                            }
+                        </select>
+                    </div>
+                    <div className="d-flex">
+                        {/* <input type="text" placeholder="Product Type" {...register("product_type", { required: true, maxLength: 100 })} /> */}
+                        <select onChange={(e) => handleOnChangeType(e)} value={type?.id} name="product_type" id="product_type">
+                            <option value="">Product Type</option>
+                            <option value="finished_good">Finished Good</option>
+                            <option value="raw_material">Raw Material</option>
+                        </select>
+                        <input type="text" placeholder="Manufacturer" {...register("manufacturer", { required: true, maxLength: 100 })} />
+                        {/* <select onChange={(e) => handleOnChange(e)} value={category?.id} name="hs_code" id="hs_code">
+                            <option value="">hs_code - description</option> */}
+                        {/* hs_code - description */}
+                        {/* {
                                 hs_codes?.map((hs_code, index) => (
                                     <option value={`${hs_code?.id}`} key={index}>{`${hs_code?.hs_code}`} - {`${hs_code?.description}`} </option>
                                 ))
                             }
-                        </select>
+                        </select> */}
                     </div>
                     <div className="text-secondary d-flex justify-content-evenly">
                         <div className="">

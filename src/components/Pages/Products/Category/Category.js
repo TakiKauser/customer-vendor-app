@@ -60,7 +60,7 @@ const Category = () => {
                         <option value="">HS Code</option>
                         {
                             codeList?.map((code, index) => (
-                                <option value={code?.id} key={index}>{code?.id} </option>
+                                <option value={code?.id} key={index}>{code?.hs_code} - {code?.description}</option>
                             ))
                         }
                     </select>

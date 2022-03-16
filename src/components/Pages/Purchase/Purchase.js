@@ -178,6 +178,12 @@ const Purchase = () => {
                             <th>AIT</th>
                             <th>RD</th>
                             <th>ATV</th>
+                            <th>Unit Price</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
+                            <th>TTI</th>
+                            <th>TTI Amount</th>
+                            <th>Total Payable</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -194,6 +200,12 @@ const Purchase = () => {
                                     <td>{product.ait}</td>
                                     <td>{product.rd}</td>
                                     <td>{product.atv}</td>
+                                    <td>"empty"</td>
+                                    <td>"empty"</td>
+                                    <td>"empty"</td>
+                                    <td>"empty"</td>
+                                    <td>"empty"</td>
+                                    <td>"empty"</td>
                                 </tr>
                                 // console.log(product)
                             ))
@@ -216,6 +228,12 @@ const Purchase = () => {
                             <td>{selectedProductsData.ait}</td>
                             <td>{selectedProductsData.rd}</td>
                             <td>{selectedProductsData.atv}</td>
+                            <td>"empty"</td>
+                            <td>"empty"</td>
+                            <td>"empty"</td>
+                            <td>"empty"</td>
+                            <td>"empty"</td>
+                            <td>"empty"</td>
                         </tr>
                     </tbody>
                 </Table>
