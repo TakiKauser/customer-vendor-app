@@ -165,7 +165,7 @@ const Sales = () => {
                 <Table id="emptyTable" striped bordered hover className="">
                     <thead>
                         <tr>
-                            <th>Name</th>
+                        <th>Name</th>
                             <th>Variant</th>
                             <th>HS Code</th>
                             <th>UOM</th>
@@ -175,6 +175,12 @@ const Sales = () => {
                             <th>AIT</th>
                             <th>RD</th>
                             <th>ATV</th>
+                            <th>Unit Price</th>
+                            <th>Quantity</th>
+                            <th>Total Price</th>
+                            <th>TTI</th>
+                            <th>TTI Amount</th>
+                            <th>Total Payable</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -191,6 +197,23 @@ const Sales = () => {
                                     <td>{product.ait}</td>
                                     <td>{product.rd}</td>
                                     <td>{product.atv}</td>
+                                    {/* <td><input type="text" placeholder="data" /></td> */}
+                                    {/* <td>
+                                        {
+                                            inEditMode.status && inEditMode.rowKey === product.id ? (
+                                                <input value={unitPrice}
+                                                    onChange={(event) => setUnitPrice(event.target.value)}
+                                                />
+                                            ) : (
+                                                item.unit_price
+                                            )
+                                        }
+                                    </td> */}
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                                 // console.log(product)
                             ))
@@ -207,12 +230,18 @@ const Sales = () => {
                             <td>{selectedProductsData.product_variant}</td>
                             <td>{selectedProductsData.hs_code}</td>
                             <td>{selectedProductsData.uom}</td>
-                            <td>{selectedProductsData.cd}</td>
-                            <td>{selectedProductsData.sd}</td>
-                            <td>{selectedProductsData.vat}</td>
-                            <td>{selectedProductsData.ait}</td>
-                            <td>{selectedProductsData.rd}</td>
-                            <td>{selectedProductsData.atv}</td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.cd} /></td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.sd} /></td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.vat} /></td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.ait} /></td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.rd} /></td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.atv} /></td>
+                            <td><input style={{ width: '50px' }} type="number" /></td>
+                            <td><input style={{ width: '50px' }} type="number" /></td>
+                            <td></td>
+                            <td><input style={{ width: '50px' }} type="number" /></td>
+                            <td><input style={{ width: '50px' }} type="number" /></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </Table>

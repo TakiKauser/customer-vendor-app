@@ -35,6 +35,52 @@ const Purchase = () => {
 
     const [selectedProductsData, setSelectedProductsData] = useState({});
 
+    // editable table field
+    const [inEditMode, setInEditMode] = useState({
+        status: false,
+        rowKey: null
+    });
+
+    const [unitPrice, setUnitPrice] = useState(null);
+
+    // /**
+    //  *
+    //  * @param id - The id of the product
+    //  * @param currentUnitPrice - The current unit price of the product
+    //  */
+    const onEdit = ({ id, currentUnitPrice }) => {
+        setInEditMode({
+            status: true,
+            rowKey: id
+        })
+        setUnitPrice(currentUnitPrice);
+    }
+
+    // const onSave = ({ id, newUnitPrice }) => {
+    //     updateInventory({ id, newUnitPrice });
+    // }
+
+    // const updateInventory = ({ id, newUnitPrice }) => {
+    //     fetch(`${INVENTORY_API_URL}/${id}`, {
+    //         method: "PATCH",
+    //         body: JSON.stringify({
+    //             unit_price: newUnitPrice
+    //         }),
+    //         headers: {
+    //             "Content-type": "application/json; charset=UTF-8"
+    //         }
+    //     })
+    //         .then(response => response.json())
+    //         .then(json => {
+    //             // reset inEditMode and unit price state values
+    //             // onCancel();
+
+    //             // fetch the updated data
+    //             fetchInventory();
+    //         })
+    // }
+    //editable table ends 
+
     useEffect(() => {
         findSelectProductData(selectedProducts)
     }, [selectedProducts]);
@@ -200,12 +246,23 @@ const Purchase = () => {
                                     <td>{product.ait}</td>
                                     <td>{product.rd}</td>
                                     <td>{product.atv}</td>
-                                    <td>"empty"</td>
-                                    <td>"empty"</td>
-                                    <td>"empty"</td>
-                                    <td>"empty"</td>
-                                    <td>"empty"</td>
-                                    <td>"empty"</td>
+                                    {/* <td><input type="text" placeholder="data" /></td> */}
+                                    {/* <td>
+                                        {
+                                            inEditMode.status && inEditMode.rowKey === product.id ? (
+                                                <input value={unitPrice}
+                                                    onChange={(event) => setUnitPrice(event.target.value)}
+                                                />
+                                            ) : (
+                                                item.unit_price
+                                            )
+                                        }
+                                    </td> */}
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                                 // console.log(product)
                             ))
@@ -222,18 +279,18 @@ const Purchase = () => {
                             <td>{selectedProductsData.product_variant}</td>
                             <td>{selectedProductsData.hs_code}</td>
                             <td>{selectedProductsData.uom}</td>
-                            <td>{selectedProductsData.cd}</td>
-                            <td>{selectedProductsData.sd}</td>
-                            <td>{selectedProductsData.vat}</td>
-                            <td>{selectedProductsData.ait}</td>
-                            <td>{selectedProductsData.rd}</td>
-                            <td>{selectedProductsData.atv}</td>
-                            <td>"empty"</td>
-                            <td>"empty"</td>
-                            <td>"empty"</td>
-                            <td>"empty"</td>
-                            <td>"empty"</td>
-                            <td>"empty"</td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.cd} /></td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.sd} /></td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.vat} /></td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.ait} /></td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.rd} /></td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.atv} /></td>
+                            <td><input style={{ width: '50px' }} type="number" /></td>
+                            <td><input style={{ width: '50px' }} type="number" /></td>
+                            <td></td>
+                            <td><input style={{ width: '50px' }} type="number" /></td>
+                            <td><input style={{ width: '50px' }} type="number" /></td>
+                            <td></td>
                         </tr>
                     </tbody>
                 </Table>
