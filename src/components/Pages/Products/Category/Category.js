@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { UrlContext } from '../../../../App';
 import Menubar from '../../../Shared/Menubar/Menubar';
 
 const Category = () => {
@@ -10,8 +11,10 @@ const Category = () => {
     const [codeList, setCodeList] = useState([]);
     const [selectedCode, setSelectedCode] = useState();
 
+    const apiDomain = useContext(UrlContext);
+
     useEffect(() => {
-        fetch(`https://vatdj.herokuapp.com/product/hs_code/`)
+        fetch(`${apiDomain}product/hs_code/`)
             .then(response => response.json())
             .then(jsonData => {
                 // console.log("list", jsonData);
@@ -29,7 +32,7 @@ const Category = () => {
 
     const onSubmit = data => {
         data.hs_code = selectedCode;
-        const url = `https://vatdj.herokuapp.com/product/product_variant/`;
+        const url = `${apiDomain}product/product_variant/`;
         fetch(url, {
             method: 'POST',
             headers: {

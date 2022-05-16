@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { UrlContext } from '../../../App';
 import Menubar from '../../Shared/Menubar/Menubar';
 
 const HsCode = () => {
@@ -7,8 +8,10 @@ const HsCode = () => {
     // const onSubmit = data => console.log(data);
     console.log(errors);
 
+    const apiDomain = useContext(UrlContext);
+
     const onSubmit = data => {
-        const url = `https://vatdj.herokuapp.com/product/hs_code/`;
+        const url = `${apiDomain}product/hs_code/`;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -26,7 +29,7 @@ const HsCode = () => {
             });
         console.log(data);
     };
-    
+
     return (
         <div>
             <Menubar />
@@ -52,6 +55,7 @@ const HsCode = () => {
                         <input type="number" placeholder="ait" {...register("ait", { required: true })} />
                         <input type="number" placeholder="rd" {...register("rd", { required: true })} />
                         <input type="number" placeholder="atv" {...register("atv", { required: true })} />
+                        <input type="number" placeholder="tti" {...register("tti", { required: true })} />
                     </div>
 
                     <input type="submit" value="Add HS_Code" />

@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
+import { UrlContext } from '../../../App';
 import Menubar from '../../Shared/Menubar/Menubar';
 
 const HSCodeList = () => {
     const [codeList, setCodeList] = useState([]);
 
+    const apiDomain = useContext(UrlContext);
+
     useEffect(() => {
-        fetch(`https://vatdj.herokuapp.com/product/hs_code/`)
+        fetch(`${apiDomain}product/hs_code/`)
             .then(response => response.json())
             .then(jsonData => {
                 // console.log("list", jsonData);
@@ -30,6 +33,7 @@ const HSCodeList = () => {
                             <th>sd</th>
                             <th>rd</th>
                             <th>vat</th>
+                            <th>tti</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,6 +49,7 @@ const HSCodeList = () => {
                                     <td>{item?.sd}</td>
                                     <td>{item?.rd}</td>
                                     <td>{item?.vat}</td>
+                                    <td>{item?.tti}</td>
                                 </tr>
                             ))
                         }

@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
+import { UrlContext } from '../../../../App';
 import Menubar from '../../../Shared/Menubar/Menubar';
 
 const VendorList = () => {
     const [vendorList, setVendorList] = useState([]);
 
+    const apiDomain = useContext(UrlContext);
+
     useEffect(() => {
-        fetch(`https://vatdj.herokuapp.com/parties/list/vendors/`)
+        fetch(`${apiDomain}parties/list/vendors/`)
             .then(response => response.json())
             .then(jsonData => {
                 // console.log("list", jsonData);

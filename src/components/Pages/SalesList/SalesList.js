@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
+import { UrlContext } from '../../../App';
 import Menubar from '../../Shared/Menubar/Menubar';
 
 const SalesList = () => {
     const [list, setList] = useState([]);
 
+    const apiDomain = useContext(UrlContext);
+
     useEffect(() => {
-        fetch(`https://vatdj.herokuapp.com/sales/`)
+        fetch(`${apiDomain}sales/`)
             .then(response => response.json())
             .then(jsonData => {
                 console.log("list", jsonData);

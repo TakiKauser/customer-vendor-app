@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { UrlContext } from '../../../App';
 import './Vendor.css';
 
 const Vendor = () => {
@@ -10,8 +11,10 @@ const Vendor = () => {
     const [is_customer, setIsCustomer] = useState(false);
     const [is_vendor, setIsVendor] = useState(false);
 
+    const apiDomain = useContext(UrlContext);
+
     const onSubmit = data => {
-        const url = `https://vatdj.herokuapp.com/parties/list/`;
+        const url = `${apiDomain}parties/list/`;
         fetch(url, {
             method: 'POST',
             headers: {

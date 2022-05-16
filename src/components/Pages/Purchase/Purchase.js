@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import './Purchase.css';
 import Menubar from '../../Shared/Menubar/Menubar';
 import { Button, Table } from 'react-bootstrap';
+import { UrlContext } from '../../../App';
 
 const Purchase = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     // const onSubmit = data => console.log(data);
     console.log(errors);
+
+    const apiDomain = useContext(UrlContext);
 
     const [vendors, setVendors] = useState([]);
     const [selectedVendor, setSelectedVendor] = useState();
@@ -86,7 +89,7 @@ const Purchase = () => {
     }, [selectedProducts]);
 
     useEffect(() => {
-        fetch(`https://vatdj.herokuapp.com/parties/list/vendors/`)
+        fetch(`${apiDomain}parties/list/vendors/`)
             .then(response => response.json())
             .then(jsonData => {
                 // console.log(jsonData);
@@ -95,7 +98,7 @@ const Purchase = () => {
     }, []);
 
     useEffect(() => {
-        fetch(`https://vatdj.herokuapp.com/product/product_list/`)
+        fetch(`${apiDomain}product/product_list/`)
             .then(response => response.json())
             .then(jsonData => {
                 // console.log("all product", jsonData);
@@ -140,7 +143,7 @@ const Purchase = () => {
     }
 
     const findSelectProductData = (id) => {
-        const url = `https://vatdj.herokuapp.com/purchase/product_details/${id}/`;
+        const url = `${apiDomain}purchase/product_details/${id}/`;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -164,7 +167,7 @@ const Purchase = () => {
 
         submitDataFormat.result[0].vendor = data;
 
-        const url = `https://vatdj.herokuapp.com/purchase/`;
+        const url = `${apiDomain}purchase/`;
         fetch(url, {
             method: 'POST',
             headers: {

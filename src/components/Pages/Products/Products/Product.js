@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { UrlContext } from '../../../../App';
 import Menubar from '../../../Shared/Menubar/Menubar';
 
 const Product = () => {
@@ -14,8 +15,10 @@ const Product = () => {
     const [category, setCategory] = useState();
     const [type, setType] = useState();
 
+    const apiDomain = useContext(UrlContext);
+
     useEffect(() => {
-        fetch(`https://vatdj.herokuapp.com/product/product_variant/`)
+        fetch(`${apiDomain}product/product_variant/`)
             .then(response => response.json())
             .then(jsonData => {
                 // console.log(jsonData);
@@ -39,7 +42,7 @@ const Product = () => {
         console.log(category);
         console.log(type);
         data.product_type = type;
-        const url = `https://vatdj.herokuapp.com/product/product_list/`;
+        const url = `${apiDomain}product/product_list/`;
         fetch(url, {
             method: 'POST',
             headers: {

@@ -1,5 +1,5 @@
 import './App.css';
-import React from "react";
+import React, { createContext } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -26,43 +26,49 @@ import Categoryist from './components/Pages/Products/Category-List/CategoryList'
 
 initAuth();
 
+export const UrlContext = createContext();
+
 function App() {
 
+  // const url = "https://vatdj.herokuapp.com/";
+  const url = "http://192.168.31.220:8001/";
   return (
     <div className="App">
       <BrowserRouter>
-        <Routes>
-          {/* <Route path="/" element={<Menubar />}> */}
-          <Route path="/" element={<Home />} />
+        <UrlContext.Provider value={url}>
+          <Routes>
+            {/* <Route path="/" element={<Menubar />}> */}
+            <Route path="/" element={<Home />} />
 
-          <Route path="customer" element={<CustomerPage />} />
-          <Route path="customer_list" element={<CustomerList />} />
+            <Route path="customer" element={<CustomerPage />} />
+            <Route path="customer_list" element={<CustomerList />} />
 
-          <Route path="vendor" element={<VendorPage />} />
-          <Route path="vendor_list" element={<VendorList />} />
+            <Route path="vendor" element={<VendorPage />} />
+            <Route path="vendor_list" element={<VendorList />} />
 
-          <Route path="category" element={<Category />} />
-          <Route path="category_list" element={<Categoryist />} />
+            <Route path="category" element={<Category />} />
+            <Route path="category_list" element={<Categoryist />} />
 
-          <Route path="products" element={<Product />} />
-          <Route path="product_list" element={<ProductList />} />
+            <Route path="products" element={<Product />} />
+            <Route path="product_list" element={<ProductList />} />
 
-          <Route path="hsCode" element={<HsCode />} />
-          <Route path="hsCode_list" element={<HSCodeList />} />
+            <Route path="hsCode" element={<HsCode />} />
+            <Route path="hsCode_list" element={<HSCodeList />} />
 
-          <Route path="purchase" element={<Purchase />} />
-          <Route path="purchase_invoice_list" element={<PurchaseList />} />
-          <Route path="productDetails/:itemNumber" element={<ProductDetails />} />
+            <Route path="purchase" element={<Purchase />} />
+            <Route path="purchase_invoice_list" element={<PurchaseList />} />
+            <Route path="productDetails/:itemNumber" element={<ProductDetails />} />
 
-          <Route path="sales" element={<Sales />} />
-          <Route path="sales_invoice_list" element={<SalesList />} />
-          {/* <Route path="productDetails/:itemNumber" element={<ProductDetails />} /> */}
+            <Route path="sales" element={<Sales />} />
+            <Route path="sales_invoice_list" element={<SalesList />} />
+            {/* <Route path="productDetails/:itemNumber" element={<ProductDetails />} /> */}
 
-          {/* <Route path="teams" element={<Teams />}> */}
-          {/* <Route path=":teamId" element={<Team />} /> */}
-          {/* <Route path="new" element={<NewTeamForm />} /> */}
-          {/* <Route index element={<LeagueStandings />} /> */}
-        </Routes>
+            {/* <Route path="teams" element={<Teams />}> */}
+            {/* <Route path=":teamId" element={<Team />} /> */}
+            {/* <Route path="new" element={<NewTeamForm />} /> */}
+            {/* <Route index element={<LeagueStandings />} /> */}
+          </Routes>
+        </UrlContext.Provider>
       </BrowserRouter>
 
     </div >

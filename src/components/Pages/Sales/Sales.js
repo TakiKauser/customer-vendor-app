@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Menubar from '../../Shared/Menubar/Menubar';
 import { Button, Table } from 'react-bootstrap';
+import { UrlContext } from '../../../App';
 
 const Sales = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
@@ -34,12 +35,49 @@ const Sales = () => {
 
     const [selectedProductsData, setSelectedProductsData] = useState({});
 
+    const apiDomain = useContext(UrlContext);
+
+    const [unitPrice, setUnitPrice] = useState(0);
+    const [quantity, setQuantity] = useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [ttiAmount, setTtiAmount] = useState(0);
+    const [totalPayble, setTotalPayable] = useState(0);
+
+    useEffect(() => {
+        const price = unitPrice * quantity;
+        setTotalPrice(price);
+    }, [unitPrice, quantity]);
+
+    useEffect(() => {
+        const amount = (totalPrice * selectedProductsData?.tti) / 100;
+        setTtiAmount(amount);
+    }, [totalPrice, selectedProductsData]);
+
+    useEffect(() => {
+        const payableAmount = (totalPrice + ttiAmount);
+        setTotalPayable(payableAmount);
+    }, [totalPrice, ttiAmount]);
+
+    const handleOnChangeTableData = (e) => {
+        setSubmitDataFormat(e.target.value);
+        console.log("value", e.target.value);
+
+        const totalPrice = document.getElementById("totalPrice");
+        totalPrice.value = submitDataFormat.result[0].products[0].totalPrice;
+
+        const ttiAmount = document.getElementById("ttiAmount");
+        ttiAmount.value = submitDataFormat.ttiAmount;
+
+        const totalPayable = document.getElementById("totalPayable");
+        totalPayable.value = submitDataFormat.totalPayable;
+    }
+
     useEffect(() => {
         findSelectProductData(selectedProducts)
     }, [selectedProducts]);
 
     useEffect(() => {
-        fetch(`https://vatdj.herokuapp.com/parties/list/customers/`)
+        fetch(`${apiDomain}parties/list/customers/`)
             .then(response => response.json())
             .then(jsonData => {
                 console.log(jsonData);
@@ -48,7 +86,7 @@ const Sales = () => {
     }, []);
 
     useEffect(() => {
-        fetch(`https://vatdj.herokuapp.com/product/product_list/`)
+        fetch(`${apiDomain}product/product_list/`)
             .then(response => response.json())
             .then(jsonData => {
                 // console.log("all product", jsonData);
@@ -87,13 +125,13 @@ const Sales = () => {
     const addTableRow = () => {
         const newData = { ...submitDataFormat };
         newData.result[0].products.unshift(selectedProductsData);
-        // console.log("spd",selectedProductsData);
+        console.log("spd", selectedProductsData);
         setSubmitDataFormat(newData);
         // console.log("sdf",submitDataFormat);
     }
 
     const findSelectProductData = (id) => {
-        const url = `https://vatdj.herokuapp.com/sales/sales_details/${id}/`;
+        const url = `${apiDomain}sales/sales_details/${id}/`;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -103,7 +141,7 @@ const Sales = () => {
         })
             .then(response => response.json())
             .then(result => {
-                console.log("result", result);
+                // console.log("result", result);
                 setSelectedProductsData(result);
                 if (result.insertedId) {
                     alert("Got product successfully!");
@@ -114,10 +152,11 @@ const Sales = () => {
 
     const onSubmit = data => {
         data.customer = selectedCustomer.name;
+        console.log(data);
 
         submitDataFormat.result[0].customer = data;
 
-        const url = `https://vatdj.herokuapp.com/sales/`;
+        const url = `${apiDomain}sales/`;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -165,20 +204,21 @@ const Sales = () => {
                 <Table id="emptyTable" striped bordered hover className="">
                     <thead>
                         <tr>
-                        <th>Name</th>
+                            <th>Name</th>
                             <th>Variant</th>
                             <th>HS Code</th>
                             <th>UOM</th>
+                            <th>Unit Price</th>
+                            <th>Quantity</th>
                             <th>CD</th>
                             <th>SD</th>
                             <th>VAT</th>
                             <th>AIT</th>
                             <th>RD</th>
                             <th>ATV</th>
-                            <th>Unit Price</th>
-                            <th>Quantity</th>
-                            <th>Total Price</th>
+
                             <th>TTI</th>
+                            <th>Total Price</th>
                             <th>TTI Amount</th>
                             <th>Total Payable</th>
                         </tr>
@@ -191,6 +231,8 @@ const Sales = () => {
                                     <td>{product.product_variant}</td>
                                     <td>{product.hs_code}</td>
                                     <td>{product.uom}</td>
+                                    <td>{unitPrice}</td>
+                                    <td>{quantity}</td>
                                     <td>{product.cd}</td>
                                     <td>{product.sd}</td>
                                     <td>{product.vat}</td>
@@ -209,11 +251,11 @@ const Sales = () => {
                                             )
                                         }
                                     </td> */}
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+
+                                    <td>{product.tti}</td>
+                                    <td>{totalPrice}</td>
+                                    <td>{ttiAmount}</td>
+                                    <td>{totalPayble}</td>
                                 </tr>
                                 // console.log(product)
                             ))
@@ -230,18 +272,19 @@ const Sales = () => {
                             <td>{selectedProductsData.product_variant}</td>
                             <td>{selectedProductsData.hs_code}</td>
                             <td>{selectedProductsData.uom}</td>
+                            <td><input style={{ width: '50px' }} type="number" value={unitPrice} onChange={(e) => setUnitPrice(e.target.value)} /></td>
+                            <td><input style={{ width: '50px' }} type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} /></td>
                             <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.cd} /></td>
                             <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.sd} /></td>
                             <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.vat} /></td>
                             <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.ait} /></td>
                             <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.rd} /></td>
                             <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.atv} /></td>
-                            <td><input style={{ width: '50px' }} type="number" /></td>
-                            <td><input style={{ width: '50px' }} type="number" /></td>
-                            <td></td>
-                            <td><input style={{ width: '50px' }} type="number" /></td>
-                            <td><input style={{ width: '50px' }} type="number" /></td>
-                            <td></td>
+
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.tti} /></td>
+                            <td id="totalPrice" onChange={(e) => handleOnChangeTableData}>{totalPrice}</td>
+                            <td id="ttiAmount" onChange={(e) => handleOnChangeTableData}>{ttiAmount ? ttiAmount : 0}</td>
+                            <td id="totalPayable" onChange={(e) => handleOnChangeTableData}>{totalPayble ? totalPayble : 0}</td>
                         </tr>
                     </tbody>
                 </Table>
