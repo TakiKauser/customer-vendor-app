@@ -16,13 +16,16 @@ import HsCode from './components/Pages/HS-Code/HsCode';
 import ProductList from './components/Pages/Products/Product-List/ProductList';
 import initAuth from './components/UserAuth/Firebase/firebase.init';
 import PurchaseList from './components/Pages/PurchaseList/PurchaseList';
-import ProductDetails from './components/Pages/ProductDetails/ProductDetails';
+// import ProductDetails from './components/Pages/ProductDetails/ProductDetails';
 import CustomerList from './components/Pages/Parties/Customer-List/CustomerList';
 import VendorList from './components/Pages/Parties/Vendor-List/VendorList';
 import HSCodeList from './components/Pages/HSCodeList/HSCodeList';
-import Sales from './components/Pages/Sales/Sales';
+// import Sales from './components/Pages/Sales/Sales';
 import SalesList from './components/Pages/SalesList/SalesList';
 import Categoryist from './components/Pages/Products/Category-List/CategoryList';
+import SalesInvoice from './components/Pages/Sales/SalesInvoice';
+import SalesOrder from './components/Pages/VAT/SalesOrder/SalesOrder';
+import PurchaseOrder from './components/Pages/VAT/PurchaseOrder/PurchaseOrder';
 
 initAuth();
 
@@ -31,7 +34,7 @@ export const UrlContext = createContext();
 function App() {
 
   // const url = "https://vatdj.herokuapp.com/";
-  const url = "http://192.168.31.220:8001/";
+  const url = "http://192.168.31.177:8000/";
   return (
     <div className="App">
       <BrowserRouter>
@@ -57,11 +60,14 @@ function App() {
 
             <Route path="purchase" element={<Purchase />} />
             <Route path="purchase_invoice_list" element={<PurchaseList />} />
-            <Route path="productDetails/:itemNumber" element={<ProductDetails />} />
+            {/* <Route path="productDetails/:itemNumber" element={<ProductDetails />} /> */}
 
-            <Route path="sales" element={<Sales />} />
+            <Route path="sales" element={<SalesInvoice />} />
             <Route path="sales_invoice_list" element={<SalesList />} />
             {/* <Route path="productDetails/:itemNumber" element={<ProductDetails />} /> */}
+
+            <Route path="vat_sales_order" element={<SalesOrder />} />
+            <Route path="vat_purchase_order" element={<PurchaseOrder />} />
 
             {/* <Route path="teams" element={<Teams />}> */}
             {/* <Route path=":teamId" element={<Team />} /> */}

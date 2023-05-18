@@ -24,7 +24,7 @@ const Product = () => {
                 // console.log(jsonData);
                 setHS_Code(jsonData);
             })
-    }, []);
+    }, [apiDomain]);
 
     // useEffect(() => {
     //     setCategory(hs_codes[0]);

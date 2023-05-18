@@ -15,7 +15,7 @@ const HSCodeList = () => {
                 // console.log("list", jsonData);
                 setCodeList(jsonData);
             })
-    }, []);
+    }, [apiDomain]);
     return (
         <div>
             <Menubar />

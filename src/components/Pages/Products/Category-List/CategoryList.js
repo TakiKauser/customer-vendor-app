@@ -15,7 +15,7 @@ const CategoryList = () => {
                 // console.log("list", jsonData);
                 setProductCategoryList(jsonData);
             })
-    }, []);
+    }, [apiDomain]);
     return (
         <div>
             <Menubar />

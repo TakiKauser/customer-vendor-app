@@ -34,7 +34,7 @@ const Customer = () => {
 
     return (
         <div className="d-flex flex-column">
-            <h2 className="my-3">Add Customer</h2>
+            <h2 className="my-3">Add Party</h2>
             <form onSubmit={handleSubmit(onSubmit)} className="purchase-form">
                 <div className="">
                     <div className="text-secondary d-flex ms-3 me-5 d-flex justify-content-between">
@@ -73,7 +73,7 @@ const Customer = () => {
                     <div className="d-flex">
                         <input type="tel" placeholder="Phone" {...register("phone", { required: true, minLength: 6, maxLength: 12 })} />
                         <input type="tel" placeholder="Mobile" {...register("mobile", { required: true, minLength: 6, maxLength: 12 })} />
-                        <input type="email" placeholder="Email" {...register("Email", { required: true, maxLength: 100 })} />
+                        <input type="email" placeholder="Email" {...register("email", { required: true, maxLength: 100 })} />
                     </div>
                     <textarea placeholder="Note" {...register("Note", { required: true })} />
                 </div>

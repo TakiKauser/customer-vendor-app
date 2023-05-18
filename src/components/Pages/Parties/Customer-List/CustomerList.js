@@ -15,7 +15,7 @@ const CustomerList = () => {
                 // console.log("list", jsonData[0]);
                 setCustomerList(jsonData);
             })
-    }, []);
+    }, [apiDomain]);
     return (
         <div>
             <Menubar />

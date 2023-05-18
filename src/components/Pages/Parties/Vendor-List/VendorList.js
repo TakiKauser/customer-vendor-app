@@ -15,7 +15,7 @@ const VendorList = () => {
                 // console.log("list", jsonData);
                 setVendorList(jsonData);
             })
-    }, []);
+    }, [apiDomain]);
     return (
         <div>
             <Menubar />

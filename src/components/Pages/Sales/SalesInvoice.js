@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import './Purchase.css';
 import Menubar from '../../Shared/Menubar/Menubar';
-import { Button, Table } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
 import { UrlContext } from '../../../App';
+import { Button, Table } from 'react-bootstrap';
 
-const Purchase = () => {
+const SalesInvoice = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     // const onSubmit = data => console.log(data);
     console.log(errors);
@@ -18,9 +17,9 @@ const Purchase = () => {
     const [submitDataFormat, setSubmitDataFormat] = useState({
         result: [
             {
-                vendor: [
+                customer: [
                     {
-                        vendor: "",
+                        customer: "",
                         email: "",
                         address: "",
                         order_deadline: "",
@@ -39,57 +38,28 @@ const Purchase = () => {
     const [selectedProductsData, setSelectedProductsData] = useState({});
 
     // editable table field
-    const [inEditMode, setInEditMode] = useState({
-        status: false,
-        rowKey: null
-    });
+    // const [inEditMode, setInEditMode] = useState({
+    //     status: false,
+    //     rowKey: null
+    // });
 
-    const [unitPrice, setUnitPrice] = useState(null);
+    const [unitPrice, setUnitPrice] = useState("");
+    const [quantity, setQuantity] = useState("");
 
-    // /**
-    //  *
-    //  * @param id - The id of the product
-    //  * @param currentUnitPrice - The current unit price of the product
-    //  */
-    const onEdit = ({ id, currentUnitPrice }) => {
-        setInEditMode({
-            status: true,
-            rowKey: id
-        })
-        setUnitPrice(currentUnitPrice);
-    }
-
-    // const onSave = ({ id, newUnitPrice }) => {
-    //     updateInventory({ id, newUnitPrice });
-    // }
-
-    // const updateInventory = ({ id, newUnitPrice }) => {
-    //     fetch(`${INVENTORY_API_URL}/${id}`, {
-    //         method: "PATCH",
-    //         body: JSON.stringify({
-    //             unit_price: newUnitPrice
-    //         }),
-    //         headers: {
-    //             "Content-type": "application/json; charset=UTF-8"
-    //         }
+    // const onEdit = ({ id, currentUnitPrice }) => {
+    //     setInEditMode({
+    //         status: true,
+    //         rowKey: id
     //     })
-    //         .then(response => response.json())
-    //         .then(json => {
-    //             // reset inEditMode and unit price state values
-    //             // onCancel();
-
-    //             // fetch the updated data
-    //             fetchInventory();
-    //         })
+    //     setUnitPrice(currentUnitPrice);
     // }
-    //editable table ends 
 
     useEffect(() => {
         findSelectProductData(selectedProducts)
     }, [selectedProducts]);
 
     useEffect(() => {
-        fetch(`${apiDomain}parties/list/vendors/`)
+        fetch(`${apiDomain}parties/list/customers/`)
             .then(response => response.json())
             .then(jsonData => {
                 // console.log(jsonData);
@@ -143,7 +113,7 @@ const Purchase = () => {
     }
 
     const findSelectProductData = (id) => {
-        const url = `${apiDomain}purchase/product_details/${id}/`;
+        const url = `${apiDomain}sales/sales_details/${id}/`;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -153,7 +123,7 @@ const Purchase = () => {
         })
             .then(response => response.json())
             .then(result => {
-                console.log("result", result);
+                // console.log("result", result);
                 setSelectedProductsData(result);
                 if (result.insertedId) {
                     alert("Got product successfully!");
@@ -163,11 +133,11 @@ const Purchase = () => {
     }
 
     const onSubmit = data => {
-        data.vendor = selectedVendor.name;
+        data.customer = selectedVendor.name;
 
-        submitDataFormat.result[0].vendor = data;
+        submitDataFormat.result[0].customer = data;
 
-        const url = `${apiDomain}purchase/`;
+        const url = `${apiDomain}sales/`;
         fetch(url, {
             method: 'POST',
             headers: {
@@ -185,16 +155,17 @@ const Purchase = () => {
             });
         console.log("data", submitDataFormat);
     };
+
     return (
         <div>
             <Menubar />
-            <h2 className="my-3">Purchase Invoice</h2>
-            <h4 className="text-start ms-5">Vendor Info</h4>
+            <h2 className="my-3">Sales Invoice</h2>
+            <h4 className="text-start ms-5">Customer Info</h4>
             <form className="purchase-form" onSubmit={handleSubmit(onSubmit)}>
-                <input type="submit" value="Purchase" className="" />
+                <input type="submit" value="Sales" className="" />
                 <div className="d-flex justify-content-around">
-                    <select onChange={(e) => handleOnChangeVendor(e)} value={selectedVendor?.id} name="vendor" id="vendor">
-                        <option value="">Select Vendor</option>
+                    <select onChange={(e) => handleOnChangeVendor(e)} value={selectedVendor?.id} name="customer" id="vendor">
+                        <option value="">Select Customer</option>
                         {
                             vendors?.map((vendor, index) => (
                                 // console.log("vendor", vendor.description, index);
@@ -249,25 +220,13 @@ const Purchase = () => {
                                     <td>{product.ait}</td>
                                     <td>{product.rd}</td>
                                     <td>{product.atv}</td>
-                                    {/* <td><input type="text" placeholder="data" /></td> */}
-                                    {/* <td>
-                                        {
-                                            inEditMode.status && inEditMode.rowKey === product.id ? (
-                                                <input value={unitPrice}
-                                                    onChange={(event) => setUnitPrice(event.target.value)}
-                                                />
-                                            ) : (
-                                                item.unit_price
-                                            )
-                                        }
-                                    </td> */}
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{product?.unit_price || ""}</td>
+                                    <td>{product?.unit_quantity || ""}</td>
+                                    <td>{(product?.unit_price * product?.unit_quantity) || 0}</td>
+                                    <td>{product.cd + product.sd + product.vat + product.ait + product.rd + product.atv}</td>
+                                    <td>{((((product.cd + product.sd + product.vat + product.ait + product.rd + product.atv) || 0) * ((product?.unit_price * product?.unit_quantity) || 0)) / 100) || ""}</td>
+                                    <td>{(((product?.unit_price * product?.unit_quantity) || 0) + (((((product.cd + product.sd + product.vat + product.ait + product.rd + product.atv) || 0) * ((product?.unit_price * product?.unit_quantity) || 0)) / 100) || 0)) || ""}</td>
                                 </tr>
-                                // console.log(product)
                             ))
                         }
                         <tr>
@@ -282,18 +241,18 @@ const Purchase = () => {
                             <td>{selectedProductsData.product_variant}</td>
                             <td>{selectedProductsData.hs_code}</td>
                             <td>{selectedProductsData.uom}</td>
-                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.cd} /></td>
-                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.sd} /></td>
-                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.vat} /></td>
-                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.ait} /></td>
-                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.rd} /></td>
-                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.atv} /></td>
-                            <td><input style={{ width: '50px' }} type="number" /></td>
-                            <td><input style={{ width: '50px' }} type="number" /></td>
-                            <td></td>
-                            <td><input style={{ width: '50px' }} type="number" /></td>
-                            <td><input style={{ width: '50px' }} type="number" /></td>
-                            <td></td>
+                            <td>{selectedProductsData.cd}</td>
+                            <td>{selectedProductsData.sd}</td>
+                            <td>{selectedProductsData.vat}</td>
+                            <td>{selectedProductsData.ait}</td>
+                            <td>{selectedProductsData.rd}</td>
+                            <td>{selectedProductsData.atv}</td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData?.unitPrice} onChange={(e) => setSelectedProductsData({ ...selectedProductsData, unit_price: e.target.value })} /></td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData?.unit_quantity} onChange={(e) => setSelectedProductsData({ ...selectedProductsData, unit_quantity: e.target.value })} /></td>
+                            <td>{(selectedProductsData?.unit_price * selectedProductsData?.unit_quantity) || ""}</td>
+                            <td>{(selectedProductsData.cd + selectedProductsData.sd + selectedProductsData.vat + selectedProductsData.ait + selectedProductsData.rd + selectedProductsData.atv) || ""}</td>
+                            <td>{((((selectedProductsData.cd + selectedProductsData.sd + selectedProductsData.vat + selectedProductsData.ait + selectedProductsData.rd + selectedProductsData.atv) || 0) * ((selectedProductsData?.unit_price * selectedProductsData?.unit_quantity) || 0)) / 100) || ""}</td>
+                            <td>{(((selectedProductsData?.unit_price * selectedProductsData?.unit_quantity) || 0) + (((((selectedProductsData.cd + selectedProductsData.sd + selectedProductsData.vat + selectedProductsData.ait + selectedProductsData.rd + selectedProductsData.atv) || 0) * ((selectedProductsData?.unit_price * selectedProductsData?.unit_quantity) || 0)) / 100) || 0)) || ""}</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -307,4 +266,4 @@ const Purchase = () => {
     );
 };
 
-export default Purchase;
+export default SalesInvoice;

@@ -20,7 +20,7 @@ const Category = () => {
                 // console.log("list", jsonData);
                 setCodeList(jsonData);
             })
-    }, []);
+    }, [apiDomain]);
 
     // useEffect(() => {
     //     setSelectedCode(codeList[0]);

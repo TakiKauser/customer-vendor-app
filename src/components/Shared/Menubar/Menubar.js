@@ -23,8 +23,8 @@ const Menubar = () => {
                             </NavDropdown>
 
                             <NavDropdown title="Parties" id="navbarScrollingDropdown">
-                                <NavDropdown.Item href="customer">Customer</NavDropdown.Item>
-                                <NavDropdown.Item href="vendor">Vendor</NavDropdown.Item>
+                                <NavDropdown.Item href="customer">Add Party</NavDropdown.Item>
+                                {/* <NavDropdown.Item href="vendor">Vendor</NavDropdown.Item> */}
                                 <NavDropdown.Item href="customer_list">Customer List</NavDropdown.Item>
                                 <NavDropdown.Item href="vendor_list">Vendor List</NavDropdown.Item>
                             </NavDropdown>
@@ -42,6 +42,11 @@ const Menubar = () => {
                             <NavDropdown title="Sales" id="navbarScrollingDropdown">
                                 <NavDropdown.Item href="sales">Sales</NavDropdown.Item>
                                 <NavDropdown.Item href="sales_invoice_list">Sales List</NavDropdown.Item>
+                            </NavDropdown>
+
+                            <NavDropdown title="VAT" id="navbarScrollingDropdown">
+                                <NavDropdown.Item href="vat_sales_order">VAT SO</NavDropdown.Item>
+                                <NavDropdown.Item href="vat_purchase_order">VAT PO</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
 
