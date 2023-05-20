@@ -4,8 +4,10 @@ import './Purchase.css';
 import Menubar from '../../Shared/Menubar/Menubar';
 import { Button, Table } from 'react-bootstrap';
 import { UrlContext } from '../../../App';
+import {useNavigate} from 'react-router-dom';
 
 const Purchase = () => {
+    const navigate = useNavigate();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     // const onSubmit = data => console.log(data);
     console.log(errors);
@@ -187,9 +189,10 @@ const Purchase = () => {
             .then(response => response.json())
             .then(result => {
                 console.log(result);
-                if (result.insertedId) {
+                if (result.success) {
                     alert("Purchase invoice is added successfully.");
                     reset();
+                    navigate('/purchase_invoice_list');
                 }
             });
         console.log("data", submitDataFormat);
