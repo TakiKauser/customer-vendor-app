@@ -21,7 +21,7 @@ const SalesOrder = () => {
         <div>
             <Menubar />
             <div>
-                <h4 className="text-start ms-5">VAT on Sale Order</h4>
+                <h4 className="text-center py-3 ms-5">VAT on Sale Order</h4>
                 <Table id="emptyTable" striped bordered hover className="">
                     <thead>
                         <tr>
