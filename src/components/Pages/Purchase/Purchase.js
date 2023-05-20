@@ -4,8 +4,10 @@ import './Purchase.css';
 import Menubar from '../../Shared/Menubar/Menubar';
 import { Button, Table } from 'react-bootstrap';
 import { UrlContext } from '../../../App';
+import {useNavigate} from 'react-router-dom';
 
 const Purchase = () => {
+    const navigate = useNavigate();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     // const onSubmit = data => console.log(data);
     console.log(errors);
@@ -163,9 +165,18 @@ const Purchase = () => {
     }
 
     const onSubmit = data => {
+
         data.vendor = selectedVendor.name;
 
         submitDataFormat.result[0].vendor = data;
+        for (let i = 0; i < submitDataFormat.result[0].products.length; i++) {
+            let pd = submitDataFormat.result[0].products[i]
+            submitDataFormat.result[0].products[i].total = (pd?.unit_price * pd?.unit_quantity) || ""
+            submitDataFormat.result[0].products[i].tti = (pd.cd + pd.sd + pd.vat + pd.ait + pd.rd + pd.atv) || ""
+            submitDataFormat.result[0].products[i].tti_amount = ((((pd.cd + pd.sd + pd.vat + pd.ait + pd.rd + pd.atv) || 0) * ((pd?.unit_price * pd?.unit_quantity) || 0)) / 100) || ""
+            submitDataFormat.result[0].products[i].total_payable = (((pd?.unit_price * pd?.unit_quantity) || 0) + (((((pd.cd + pd.sd + pd.vat + pd.ait + pd.rd + pd.atv) || 0) * ((pd?.unit_price * pd?.unit_quantity) || 0)) / 100) || 0))
+           
+          }
 
         const url = `${apiDomain}purchase/`;
         fetch(url, {
@@ -178,9 +189,10 @@ const Purchase = () => {
             .then(response => response.json())
             .then(result => {
                 console.log(result);
-                if (result.insertedId) {
+                if (result.success) {
                     alert("Purchase invoice is added successfully.");
                     reset();
+                    navigate('/purchase_invoice_list');
                 }
             });
         console.log("data", submitDataFormat);
@@ -261,11 +273,12 @@ const Purchase = () => {
                                             )
                                         }
                                     </td> */}
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{product.unit_price * 3 || ""}</td>
+                                    <td>{product?.unit_quantity || ""}</td>
+                                    <td>{(product?.unit_price * product?.unit_quantity) || 0}</td>
+                                    <td>{product.cd + product.sd + product.vat + product.ait + product.rd + product.atv}</td>
+                                    <td>{((((product.cd + product.sd + product.vat + product.ait + product.rd + product.atv) || 0) * ((product?.unit_price * product?.unit_quantity) || 0)) / 100) || ""}</td>
+                                    <td>{(((product?.unit_price * product?.unit_quantity) || 0) + (((((product.cd + product.sd + product.vat + product.ait + product.rd + product.atv) || 0) * ((product?.unit_price * product?.unit_quantity) || 0)) / 100) || 0)) || ""}</td>
                                 </tr>
                                 // console.log(product)
                             ))
@@ -288,12 +301,12 @@ const Purchase = () => {
                             <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.ait} /></td>
                             <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.rd} /></td>
                             <td><input style={{ width: '50px' }} type="number" value={selectedProductsData.atv} /></td>
-                            <td><input style={{ width: '50px' }} type="number" /></td>
-                            <td><input style={{ width: '50px' }} type="number" /></td>
-                            <td></td>
-                            <td><input style={{ width: '50px' }} type="number" /></td>
-                            <td><input style={{ width: '50px' }} type="number" /></td>
-                            <td></td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData?.unitPrice} onChange={(e) => setSelectedProductsData({ ...selectedProductsData, unit_price: e.target.value })} /></td>
+                            <td><input style={{ width: '50px' }} type="number" value={selectedProductsData?.unit_quantity} onChange={(e) => setSelectedProductsData({ ...selectedProductsData, unit_quantity: e.target.value })} /></td>
+                            <td>{(selectedProductsData?.unit_price * selectedProductsData?.unit_quantity) || ""}</td>
+                            <td>{(selectedProductsData.cd + selectedProductsData.sd + selectedProductsData.vat + selectedProductsData.ait + selectedProductsData.rd + selectedProductsData.atv) || ""} </td>
+                            <td>{((((selectedProductsData.cd + selectedProductsData.sd + selectedProductsData.vat + selectedProductsData.ait + selectedProductsData.rd + selectedProductsData.atv) || 0) * ((selectedProductsData?.unit_price * selectedProductsData?.unit_quantity) || 0)) / 100) || ""}</td>
+                            <td>{(((selectedProductsData?.unit_price * selectedProductsData?.unit_quantity) || 0) + (((((selectedProductsData.cd + selectedProductsData.sd + selectedProductsData.vat + selectedProductsData.ait + selectedProductsData.rd + selectedProductsData.atv) || 0) * ((selectedProductsData?.unit_price * selectedProductsData?.unit_quantity) || 0)) / 100) || 0)) || ""}</td>
                         </tr>
                     </tbody>
                 </Table>

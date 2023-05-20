@@ -2,8 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { UrlContext } from '../../../../App';
 import Menubar from '../../../Shared/Menubar/Menubar';
+import {useNavigate} from 'react-router-dom';
+
 
 const Product = () => {
+    const navigate = useNavigate();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     // const onSubmit = data => console.log(data);
     console.log(errors);
@@ -53,9 +56,10 @@ const Product = () => {
             .then(response => response.json())
             .then(result => {
                 console.log(result);
-                if (result.insertedId) {
+                if (result) {
                     alert("Product variant is added successfully.");
                     reset();
+                    navigate('/product_list');
                 }
             });
         console.log(data);

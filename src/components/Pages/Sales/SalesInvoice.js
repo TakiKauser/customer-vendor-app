@@ -3,8 +3,10 @@ import Menubar from '../../Shared/Menubar/Menubar';
 import { useForm } from 'react-hook-form';
 import { UrlContext } from '../../../App';
 import { Button, Table } from 'react-bootstrap';
+import {useNavigate} from 'react-router-dom';
 
 const SalesInvoice = () => {
+    const navigate = useNavigate();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     // const onSubmit = data => console.log(data);
     console.log(errors);
@@ -136,7 +138,14 @@ const SalesInvoice = () => {
         data.customer = selectedVendor.name;
 
         submitDataFormat.result[0].customer = data;
-
+        for (let i = 0; i < submitDataFormat.result[0].products.length; i++) {
+            let pd = submitDataFormat.result[0].products[i]
+            submitDataFormat.result[0].products[i].total = (pd?.unit_price * pd?.unit_quantity) || ""
+            submitDataFormat.result[0].products[i].tti = (pd.cd + pd.sd + pd.vat + pd.ait + pd.rd + pd.atv) || ""
+            submitDataFormat.result[0].products[i].tti_amount = ((((pd.cd + pd.sd + pd.vat + pd.ait + pd.rd + pd.atv) || 0) * ((pd?.unit_price * pd?.unit_quantity) || 0)) / 100) || ""
+            submitDataFormat.result[0].products[i].total_payable = (((pd?.unit_price * pd?.unit_quantity) || 0) + (((((pd.cd + pd.sd + pd.vat + pd.ait + pd.rd + pd.atv) || 0) * ((pd?.unit_price * pd?.unit_quantity) || 0)) / 100) || 0))
+           
+          }
         const url = `${apiDomain}sales/`;
         fetch(url, {
             method: 'POST',
@@ -147,13 +156,14 @@ const SalesInvoice = () => {
         })
             .then(response => response.json())
             .then(result => {
-                console.log(result);
-                if (result.insertedId) {
+                console.log("result", result.success)
+                if (result.success) {
                     alert("Purchase invoice is added successfully.");
                     reset();
+                    navigate('/sales_invoice_list');
                 }
             });
-        console.log("data", submitDataFormat);
+
     };
 
     return (

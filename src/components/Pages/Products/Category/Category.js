@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { UrlContext } from '../../../../App';
 import Menubar from '../../../Shared/Menubar/Menubar';
+import {useNavigate} from 'react-router-dom';
 
 const Category = () => {
+    const navigate = useNavigate();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     // const onSubmit = data => console.log(data);
     console.log(errors);
@@ -43,9 +45,10 @@ const Category = () => {
             .then(response => response.json())
             .then(result => {
                 console.log(result);
-                if (result.insertedId) {
+                if (result?.id) {
                     alert("Category is added successfully.");
                     reset();
+                    navigate('/category_list');
                 }
             });
         console.log("data", data);
