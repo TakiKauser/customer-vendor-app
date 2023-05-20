@@ -136,7 +136,14 @@ const SalesInvoice = () => {
         data.customer = selectedVendor.name;
 
         submitDataFormat.result[0].customer = data;
-
+        for (let i = 0; i < submitDataFormat.result[0].products.length; i++) {
+            let pd = submitDataFormat.result[0].products[i]
+            submitDataFormat.result[0].products[i].total = (pd?.unit_price * pd?.unit_quantity) || ""
+            submitDataFormat.result[0].products[i].tti = (pd.cd + pd.sd + pd.vat + pd.ait + pd.rd + pd.atv) || ""
+            submitDataFormat.result[0].products[i].tti_amount = ((((pd.cd + pd.sd + pd.vat + pd.ait + pd.rd + pd.atv) || 0) * ((pd?.unit_price * pd?.unit_quantity) || 0)) / 100) || ""
+            submitDataFormat.result[0].products[i].total_payable = (((pd?.unit_price * pd?.unit_quantity) || 0) + (((((pd.cd + pd.sd + pd.vat + pd.ait + pd.rd + pd.atv) || 0) * ((pd?.unit_price * pd?.unit_quantity) || 0)) / 100) || 0))
+           
+          }
         const url = `${apiDomain}sales/`;
         fetch(url, {
             method: 'POST',
